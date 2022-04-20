@@ -1,0 +1,4 @@
+rootProject.name = 'java-spring-example2'
+
+//include ':clean-core'
+//project(':clean-core').projectDir = "D:\\Programing\\Java\\Projects\\clean-core" as File
