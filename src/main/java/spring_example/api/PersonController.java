@@ -5,10 +5,11 @@
 package spring_example.api;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
-import javax.validation.Valid;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,8 @@ import spring_example.service.PersonService;
 @RestController
 public class PersonController {
 
+    private static final Validator DEFAULT_VALIDATOR = javax.validation.Validation.buildDefaultValidatorFactory().getValidator();
+
     private final PersonService personService;
 
     @Autowired
@@ -36,8 +39,16 @@ public class PersonController {
     }
 
     @PostMapping
-    public void addPerson(@Valid @NonNull @RequestBody Person person) {
+    public void addPerson(@RequestBody Person person) {
+        validateAndThrow(person);
         personService.addPerson(person);
+    }
+
+    public static void validateAndThrow(Object object) throws RuntimeException {
+        Set<ConstraintViolation<Object>> errors = DEFAULT_VALIDATOR.validate(object);
+        if (!errors.isEmpty()) {
+            throw new RuntimeException(errors.iterator().next().getMessage());
+        }
     }
 
     @GetMapping
@@ -56,7 +67,7 @@ public class PersonController {
     }
 
     @PutMapping(path = "{id}")
-    public void updatePerson(@PathVariable("id") UUID id, @Valid @NonNull @RequestBody Person personToUpdate) {
+    public void updatePerson(@PathVariable("id") UUID id, @RequestBody Person personToUpdate) {
         personService.updatePerson(id, personToUpdate);
     }
 }
