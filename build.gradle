@@ -32,6 +32,8 @@ dependencies {
     //para los annotations, el validator me lo da hibernate que me lo da spring y lo otro en clean-core
     implementation 'javax.validation:validation-api:2.0.1.Final'
 
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.2.0.Final'
+
     //injection
     implementation 'com.google.inject:guice:5.0.1'
 
