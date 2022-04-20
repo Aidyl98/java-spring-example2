@@ -6,6 +6,7 @@ package spring_example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -14,6 +15,8 @@ import java.util.UUID;
 public class Person {
 
     private final UUID id;
+
+    @NotBlank
     private final String name;
 
     public Person(@JsonProperty("id") UUID id, @JsonProperty("name") String name) {
