@@ -6,7 +6,6 @@ package spring_example.api;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import spring_example.model.Person;
-import spring_example.service.PersonService;
+import spring_example.model.Person_1;
+import spring_example.service.PersonService_1;
 
 /**
  *
@@ -27,19 +26,19 @@ import spring_example.service.PersonService;
  */
 @RequestMapping("api/v1/person")
 @RestController
-public class PersonController {
+public class PersonController_1 {
 
     private static final Validator DEFAULT_VALIDATOR = javax.validation.Validation.buildDefaultValidatorFactory().getValidator();
 
-    private final PersonService personService;
+    private final PersonService_1 personService;
 
     @Autowired
-    public PersonController(PersonService personService) {
+    public PersonController_1(PersonService_1 personService) {
         this.personService = personService;
     }
 
     @PostMapping
-    public void addPerson(@RequestBody Person person) {
+    public void addPerson(@RequestBody Person_1 person) {
         validateAndThrow(person);
         personService.addPerson(person);
     }
@@ -52,22 +51,22 @@ public class PersonController {
     }
 
     @GetMapping
-    public List<Person> getAllPerson() {
+    public List<Person_1> getAllPerson() {
         return personService.getAllPerson();
     }
 
     @GetMapping(path = "{id}")
-    public Person getPersonById(@PathVariable("id") UUID id) {
+    public Person_1 getPersonById(@PathVariable("id") int id) {
         return personService.getPersonById(id).orElse(null);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deletePersonByID(@PathVariable("id") UUID id) {
+    public void deletePersonByID(@PathVariable("id") int id) {
         personService.deletePerson(id);
     }
 
     @PutMapping(path = "{id}")
-    public void updatePerson(@PathVariable("id") UUID id, @RequestBody Person personToUpdate) {
+    public void updatePerson(@PathVariable("id") int id, @RequestBody Person_1 personToUpdate) {
         personService.updatePerson(id, personToUpdate);
     }
 }
